@@ -312,7 +312,6 @@ def main():
     parser.add_argument('--epoch', type=int, default=1)
     parser.add_argument('--batch_size', type=int, default=3000)
     parser.add_argument('--steps_ckpt', type=int, default=10)
-    parser.add_argument('--src_word_dropout', default=0.2)
 
     # model hyperparameters
     parser.add_argument('--d_model', type=int, default=512)
@@ -393,10 +392,10 @@ def main():
     val_files_prefix = os.path.join(args.data_dir,args.val_files_prefix)
 
     train_src_file,train_trg_file = [train_files_prefix+ext for ext in [".src",".trg"]]
-    training_data_chunks = data_chunk_iter(train_src_file,train_trg_file,sp_model,args.max_seq_len,args.load_amount,args.src_word_dropout)
+    training_data_chunks = data_chunk_iter(train_src_file,train_trg_file,sp_model,args.max_seq_len,args.load_amount)
 
     val_src_file,val_trg_file = [val_files_prefix+ext for ext in [".src",".trg"]]
-    validation_data_chunks = data_chunk_iter(val_src_file,val_trg_file,sp_model,args.max_seq_len,args.load_amount,args.src_word_dropout)
+    validation_data_chunks = data_chunk_iter(val_src_file,val_trg_file,sp_model,args.max_seq_len,args.load_amount)
 
     train(model, training_data_chunks, validation_data_chunks, optimizer, device, args)
 
