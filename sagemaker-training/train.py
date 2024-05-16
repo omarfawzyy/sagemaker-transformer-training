@@ -303,14 +303,14 @@ def main():
     parser.add_argument('--sp_model_file', type=str) # model file name
 
     # data loading
-    parser.add_argument('--load_amount',type=int,default=100000)
-    parser.add_argument('--max_seq_len',type=int,default=100)
+    parser.add_argument('--load_amount',type=int,default=None)
+    parser.add_argument('--max_seq_len',type=int,default=200)
     parser.add_argument('--train_files_prefix',type=str)
     parser.add_argument('--val_files_prefix',type=str)
 
     # training parameters
     parser.add_argument('--epoch', type=int, default=1)
-    parser.add_argument('--batch_size', type=int, default=4096)
+    parser.add_argument('--batch_size', type=int, default=3000)
     parser.add_argument('--steps_ckpt', type=int, default=10)
     parser.add_argument('--src_word_dropout', default=0.2)
 
