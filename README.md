@@ -5,7 +5,7 @@ This project includes a training script for training a transformer model using s
 #### Training:
   * multi-machine training: can use multiple instances of cpu-based machines(ex. ml.c5.2xlarge) to speed up training.
   * saving best checkpoint: evaluates model according to user-provided validation set every user-set number of samples and saves best model
-  * prining progress and estimated time for completion of epoch
+  * printing progress and estimated time for completion of epoch
 #### Data:
   * creates dataset from parallel data files
   * loads data in chunks to satisfy memory constraints
