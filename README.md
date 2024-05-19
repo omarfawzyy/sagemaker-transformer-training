@@ -15,4 +15,4 @@ This project includes a training script for training a transformer model using s
 The training script is run using SageMaker's PyTorch Estimator. It's necessary to set the *checkpoint_s3_uri* parameter to the s3 bucket you wish to save the checkpoint to. This ensures that the training script uploads checkpoint information in real time during training. When calling the fit method of the Estimator, you provide the s3 bucket that would include the information needed for training such as the training data,validation_data, and sentencepiece model. Feel free to modify the code to suit your needs and if you have any questions feel free to contact me.
 
 #### Contact
-email: omar1142001@gmail.com
+email: omaralzamk@gmail.com
