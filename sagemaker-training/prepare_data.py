@@ -4,10 +4,14 @@ import io
 from torch.utils.data import DataLoader
 from torch.utils.data import RandomSampler
 
-def count_examples(file):
+def count_examples(file,sp_model=None,max_size=None):
   i = 0
   for ex in iter(io.open(file, encoding="utf8")):
-    i+=1
+    if sp_model is not None and max_size is not None:
+      if len(sp_model.encode(ex)<=max_size:
+        i+=1
+    else:
+      i+=1
   return i
 
 def create_data_chunk(src_file,trg_file,sp_model,max_len,idx_slice):
@@ -33,14 +37,15 @@ class data_chunk_iter:
     self.max_len = max_len
     self.sp_model = sp_model
     self.skipped_chunks = 0
-    size = count_examples(src_file)
+    self.size = count_examples(src_file,sp_model,max_len)
+    unfiltered_size = count_examples(src_file)
     if chunk_size is not None:
-        start_idxs = [idx for idx in range(0,size,chunk_size)]
-        intervals = [(start,start+chunk_size) for start in start_idxs if start+chunk_size<=size]
-        if intervals[-1][1] < size:
-            intervals.append((intervals[-1][1],size))
+        start_idxs = [idx for idx in range(0,unfiltered_size,chunk_size)]
+        intervals = [(start,start+chunk_size) for start in start_idxs if start+chunk_size<=unfiltered_size]
+        if intervals[-1][1] < unfiltered_size:
+            intervals.append((intervals[-1][1],unfiltered_size))
     else:
-       intervals = [(0,size)]
+       intervals = [(0,unfiltered_size)]
     self.intervals = intervals
   def __iter__(self):
     self.intervals_iter = iter(self.intervals[self.skipped_chunks:])
@@ -48,7 +53,7 @@ class data_chunk_iter:
   def __next__(self): 
     return create_data_chunk(self.src_file,self.trg_file,self.sp_model,self.max_len,next(self.intervals_iter))
   def __len__(self):
-     return len(self.intervals)
+     return self.size
   def skip_chunks(self,skipped_chunks):
      self.skipped_chunks = skipped_chunks
 
